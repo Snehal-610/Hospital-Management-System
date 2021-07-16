@@ -1,0 +1,89 @@
+{% extends 'Reception/base.html' %}
+{% load static %}
+{% block content %}
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <h2>All Doctors <small class="text-muted">Welcome to Civil Hospital</small></h2>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+
+                <button class="btn btn-white btn-icon btn-round d-none d-md-inline-block float-right m-l-10"
+                    type="button">
+                    <i class="zmdi zmdi-plus"></i>
+                </button>
+
+
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="..\dashboard\index.html"><i class="zmdi zmdi-home"></i>
+                            Civil Hospital</a></li>
+                    <li class="breadcrumb-item">Doctors</li>
+                    <li class="breadcrumb-item active">Pending Doctors</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="tab-content m-t-10">
+                    <div class="row clearfix">
+                        {% for i in doctordata %}
+                        {% if i.DStatus == 'Pending' %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="card xl-blue member-card doctor">
+                                <div class="body">
+                                    <div class="member-thumb">
+                                        <img src="/media/{{i.ProfilePic}}" class="img-fluid"
+                                            alt="profile-image">
+                                    </div>
+                                    <div class="detail">
+                                        <h4 class="m-b-0">{{i.Fname}} </h4>
+                                        <p class="text-muted">{{i.Department}}</p>
+                                        <ul class="social-links list-inline m-t-20">
+                                            <li><a title="facebook" href="#"><i class="zmdi zmdi-facebook"></i></a>
+                                            </li>
+                                            <li><a title="twitter" href="#"><i class="zmdi zmdi-twitter"></i></a>
+                                            </li>
+                                            <li><a title="instagram" href="#"><i class="zmdi zmdi-instagram"></i></a>
+                                            </li>
+                                        </ul>
+                                        <p class="text-muted">{{i.Address}}</p>
+                                        <a href="{% url 'docapprove' pk=i.id st='Approve' %}" class="btn btn-warning btn-round"> Approve</a>
+                                        <a href="{% url 'docapprove' pk=i.id st='Reject' %}" class="btn btn-danger btn-round" onclick="return confirm('Are you really want to Reejct?')">Reject</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- Scripts -->
+<script src="{% static 'assets\bundles\libscripts.bundle.js' %}"></script>
+<script src="{% static 'assets\bundles\vendorscripts.bundle.js' %}"></script>
+
+<script src="{% static 'assets\bundles\mainscripts.bundle.js' %}"></script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/59f5afbbbb0c3f433d4c5c4c/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+
+</html>

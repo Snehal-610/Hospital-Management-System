@@ -1,0 +1,111 @@
+{% extends 'Doctor/doctor-base.html' %}
+{% load static %}
+{% block content %}
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <h2>All Appointment <small class="text-muted">Welcome to Civil Hospital</small></h2>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+
+                <button class="btn btn-white btn-icon btn-round d-none d-md-inline-block float-right m-l-10"
+                    type="button">
+                    <i class="zmdi zmdi-plus"></i>
+                </button>
+
+
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="..\dashboard\index.html"><i class="zmdi zmdi-home"></i>
+                            Civil Hospital</a></li>
+                    <li class="breadcrumb-item">Patients</li>
+                    <li class="breadcrumb-item active">Your Appointment</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row clearfix">
+            <div class="col-md-12">
+                <div class="card patients-list">
+                    <div class="header">
+                        <h2><strong>Appointment</strong> List</h2>
+                        <ul class="header-dropdown">
+                            <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle"
+                                    data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="zmdi zmdi-more"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right slideUp">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else</a></li>
+                                </ul>
+                            </li>
+                            <li class="remove">
+                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <!-- Tab panes -->
+                        <div class="tab-content m-t-10">
+                            <div class="tab-pane table-responsive active" id="All">
+                                <table class="table m-b-0 table-hover">
+                                    <thead align="center">
+                                        <tr><th>Patients ID</th>
+                                            <th>Name</th>
+                                            <th>Gender & Age</th>
+                                            <th>Number</th>
+                                            <th>Symptoms</th>
+                                            <th>Discription</th>
+                                            <th>Discharge</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody align="center">
+                                        {% for i in appointdetails %}
+                                        <tr>
+                                            <td>{{i.PatientId.id}}</td>
+                                            <td><span class="list-name">{{i.PatientId.Fname}}</span></td>
+                                            <td>{{i.PatientId.Gender}} - {{i.PatientId.Age}} Years old</td>
+                                            <td>{{i.PatientId.Phone_Number}}</td>
+                                            <td>{{i.PatientId.Symptoms}}</td>
+                                            <td>{{i.Discription}}</td>
+                                            {% if i.PatientId.status == 'Approve' %}
+                                            <td><a href="#" class="btn btn-warning btn-round"
+                                                 onclick="return confirm('Are you really want to Dischage the patient?')">Discharge</a></td>
+                                                 {% else %}
+                                                 <td>Not Applicable</td>
+                                                {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+{% endblock %}
+<!-- Scripts -->
+<script src="{% static 'assets\bundles\libscripts.bundle.js' %}"></script>
+<script src="{% static 'assets\bundles\vendorscripts.bundle.js' %}"></script>
+
+<script src="{% static 'assets\bundles\mainscripts.bundle.js' %}"></script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/59f5afbbbb0c3f433d4c5c4c/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+
+</html>
