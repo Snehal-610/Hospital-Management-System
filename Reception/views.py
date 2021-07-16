@@ -310,6 +310,9 @@ def PatientApprove(request,pk,st):
 # ----------------------- Patient Section End -----------------------
 # ----------------------- Status Approve or Reject Section Start -----------------------
 def BillIndex(request):
-    return render(request,"Reception/add-payment.html")
+    doctor=Doctor.objects.all()
+    patients=Patients.objects.all()
+    d={"doctordata":doctor,"patientdata":patients}
+    return render(request,"Reception/add-payment.html",d)
 
 # ----------------------- Status Approve or Reject Section End -----------------------
