@@ -1,3 +1,4 @@
+import Reception
 from django.shortcuts import render,redirect
 from .models import *
 from Doctor.models import *
@@ -314,28 +315,37 @@ def BillIndex(request):
         user=User.objects.get(id=request.session['id'])
     doctor=Doctor.objects.all()
     patients=Patients.objects.all()
-    d={"doctordata":doctor,"patientdata":patients,"data":user}
-
-    patients=Patients.objects.order_by('-id')[0].id
-    print(f"---------------------------------------------{patients}")
+    billnum=(DischargePatients.objects.order_by('-Bill_Number')[0].Bill_Number)+1
+    d={"doctordata":doctor,"patientdata":patients,"data":user,"billnum":billnum}
     return render(request,"Reception/add-payment.html",d)
 
 def BillData(request):
-    if request.method=="POST":
-        billnum = request.POST['billnumber']
-        patientinfo = request.POST['patientinfo']
-        docinfo = request.POST['docterinfo']
-        paydate = request.POST['Paymentdate']
-        rcharge = request.POST['roomcharge']
-        dcharge = request.POST['doccharge']
-        mcharge = request.POST['medicinecharge']
-        echarge = request.POST['extracharge']
-        Total = request.POST['total']
+    if 'id' in request.session and 'emailid' in request.session:
+        user=User.objects.get(id=request.session['id'])
+        if request.method=="POST":
+            patientinfo = request.POST['patientinfo']
+            docinfo = request.POST['docterinfo']
+            paydate = request.POST['Paymentdate']
+            rcharge = request.POST['roomcharge']
+            dcharge = request.POST['doccharge']
+            mcharge = request.POST['medicinecharge']
+            echarge = request.POST['extracharge']
+            Total = request.POST['total']
+            
+            doctorid=docinfo.split()
+            patientid=patientinfo.split()
+            did=Doctor.objects.get(id=doctorid[0])
+            pid=Patients.objects.get(id=patientid[0])
+            billnum=(DischargePatients.objects.order_by('-Bill_Number')[0].Bill_Number)+1
+            
+            Discharge=DischargePatients.objects.create(user=user,PatientId=pid,DoctorId=did,RoomCharge=rcharge,MedicineCost=mcharge,Bill_Number=billnum,PaymentDate=paydate,DoctorFee=dcharge,OtherCharge=echarge,Total=Total)
 
-        doctorid=docinfo.split()
-        patientid=patientinfo.split()
-        did=Doctor.objects.get(id=doctorid[0])
-        pid=Patients.objects.get(id=patientid[0])
-        Discharge=()
+        return redirect("allpayment")
 
+def AllPayment(request):
+    if 'id' in request.session and 'emailid' in request.session:
+        user=User.objects.get(id=request.session['id'])
+        bill=DischargePatients.objects.all()
+        d={"data":user,"bill":bill}
+    return render(request,"Reception/all-payment.html",d)
 # ----------------------- Status Approve or Reject Section End -----------------------

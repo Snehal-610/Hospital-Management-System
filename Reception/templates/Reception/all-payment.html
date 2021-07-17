@@ -1,0 +1,104 @@
+﻿{% extends 'Reception/base.html' %}
+{% load static %}
+{% block content %}
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <h2>Payments <small class="text-muted">Welcome to Oreo</small></h2>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+
+
+
+                <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="..\dashboard\index.html"><i class="zmdi zmdi-home"></i>
+                            Oreo</a></li>
+                    <li class="breadcrumb-item">Payment</li>
+                    <li class="breadcrumb-item active">Payments</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Receipt List</strong> </h2>
+                        <ul class="header-dropdown">
+                            <li class="remove">
+                                <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                <thead align="center">
+                                    <tr>
+                                        <th colspan="4"><h4 style="margin: 0;">Personal Information</h4></th>
+                                        <th colspan="5"><h4 style="margin: 0;">Hospital Charges</h4></th>
+                                    </tr>
+                                </thead>
+                                <thead align="center">
+                                    <tr>
+                                        <th>Bill No</th>
+                                        <th>Bill date</th>
+                                        <th>Patient</th>
+                                        <th>Doctor</th>
+                                        <th>Room</th>
+                                        <th>Doctor</th>
+                                        <th>Medicine</th>
+                                        <th>Extra</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody align="center">
+                                    {% for i in bill %}
+                                    <tr>
+                                        <td>{{i.Bill_Number}}</td>
+                                        <td>{{i.PaymentDate}}</td>
+                                        <td>{{i.PatientId.Fname}} {{i.PatientId.Lname}}</td>
+                                        <td>{{i.DoctorId.Fname}} {{i.DoctorId.Lname}}</td>
+                                        <td>{{i.RoomCharge}}</td>
+                                        <td>{{i.DoctorFee}}</td>
+                                        <td>{{i.MedicineCost}}</td>
+                                        <td>{{i.OtherCharge}}</td>
+                                        <td>{{i.Total}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+<!-- Scripts -->
+<script src="..\assets\bundles\libscripts.bundle.js"></script>
+<script src="..\assets\bundles\vendorscripts.bundle.js"></script>
+
+<script src="..\assets\bundles\mainscripts.bundle.js"></script>
+<script src="..\assets\bundles\datatablescripts.bundle.js"></script>
+<script src="..\assets\js\pages\tables\jquery-datatable.js"></script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/59f5afbbbb0c3f433d4c5c4c/default';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+
+</html>

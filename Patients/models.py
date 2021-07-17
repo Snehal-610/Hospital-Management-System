@@ -39,7 +39,7 @@ class DischargePatients(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     PatientId=models.ForeignKey(Patients,on_delete=models.CASCADE,null=True)
     DoctorId=models.ForeignKey(Doctor,on_delete=models.CASCADE,null=True)
-    releaseDate=models.DateField(auto_now_add=True,null=False)
+    PaymentDate=models.DateField(auto_now_add=True,null=False)
     RoomCharge=models.PositiveIntegerField(null=False,default=0)
     MedicineCost=models.PositiveIntegerField(null=False,default=0)
     DoctorFee=models.PositiveIntegerField(null=False,default=0)
