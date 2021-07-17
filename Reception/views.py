@@ -309,14 +309,15 @@ def PatientApprove(request,pk,st):
     return redirect("loginpage")
 
 # ----------------------- Patient Section End -----------------------
-# ----------------------- Status Approve or Reject Section Start -----------------------
+# ----------------------- Invoice | Payment | Receipt Section Start -----------------------
 def BillIndex(request):
     if 'id' in request.session and 'emailid' in request.session:
         user=User.objects.get(id=request.session['id'])
     doctor=Doctor.objects.all()
     patients=Patients.objects.all()
     billnum=(DischargePatients.objects.order_by('-Bill_Number')[0].Bill_Number)+1
-    d={"doctordata":doctor,"patientdata":patients,"data":user,"billnum":billnum}
+    a=False
+    d={"doctordata":doctor,"patientdata":patients,"data":user,"billnum":billnum,"a":a}
     return render(request,"Reception/add-payment.html",d)
 
 def BillData(request):
@@ -348,4 +349,14 @@ def AllPayment(request):
         bill=DischargePatients.objects.all()
         d={"data":user,"bill":bill}
     return render(request,"Reception/all-payment.html",d)
-# ----------------------- Status Approve or Reject Section End -----------------------
+
+def SelectedBillIndex(request,pk):
+    if 'id' in request.session and 'emailid' in request.session:
+        user=User.objects.get(id=request.session['id'])
+    patients=Patients.objects.get(id=pk)
+    doctor=Doctor.objects.get(id=patients.DoctorId.id)
+    billnum=(DischargePatients.objects.order_by('-Bill_Number')[0].Bill_Number)+1
+    a=True
+    d={"doctordata":doctor,"patientdata":patients,"data":user,"billnum":billnum,"a":a}
+    return render(request,"Reception/add-payment.html",d)
+# ----------------------- Invoice | Payment | Receipt Section End -----------------------

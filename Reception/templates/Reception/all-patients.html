@@ -99,7 +99,7 @@
                                             <td><a href="{% url 'patientsdelete' pk=i.id %}" class="btn btn-danger btn-round"
                                                  onclick="return confirm('Are you really want to Delete?')">Delete</a></td>
                                                  {% if i.status == 'Approve' %}
-                                            <td><a href="#" class="btn btn-warning btn-round"
+                                            <td><a href="{% url 'Selectedpatientbill' pk=i.id %}" class="btn btn-warning btn-round"
                                                  onclick="return confirm('Are you really want to Dischage the patient?')">Discharge</a></td>
                                                  {% else %}
                                                  <td>Not Applicable</td>
