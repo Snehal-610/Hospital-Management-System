@@ -35,4 +35,5 @@ urlpatterns = [
     path('Patient-Approve/<int:pk><str:st>/',views.PatientApprove,name="patientapprove"),
 
     path("Patient-Bill/",views.BillIndex,name="patientbill"),
+    path("Bill-Data/",views.BillData,name="billdata"),
 ]

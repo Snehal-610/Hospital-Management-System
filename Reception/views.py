@@ -310,9 +310,32 @@ def PatientApprove(request,pk,st):
 # ----------------------- Patient Section End -----------------------
 # ----------------------- Status Approve or Reject Section Start -----------------------
 def BillIndex(request):
+    if 'id' in request.session and 'emailid' in request.session:
+        user=User.objects.get(id=request.session['id'])
     doctor=Doctor.objects.all()
     patients=Patients.objects.all()
-    d={"doctordata":doctor,"patientdata":patients}
+    d={"doctordata":doctor,"patientdata":patients,"data":user}
+
+    patients=Patients.objects.order_by('-id')[0].id
+    print(f"---------------------------------------------{patients}")
     return render(request,"Reception/add-payment.html",d)
+
+def BillData(request):
+    if request.method=="POST":
+        billnum = request.POST['billnumber']
+        patientinfo = request.POST['patientinfo']
+        docinfo = request.POST['docterinfo']
+        paydate = request.POST['Paymentdate']
+        rcharge = request.POST['roomcharge']
+        dcharge = request.POST['doccharge']
+        mcharge = request.POST['medicinecharge']
+        echarge = request.POST['extracharge']
+        Total = request.POST['total']
+
+        doctorid=docinfo.split()
+        patientid=patientinfo.split()
+        did=Doctor.objects.get(id=doctorid[0])
+        pid=Patients.objects.get(id=patientid[0])
+        Discharge=()
 
 # ----------------------- Status Approve or Reject Section End -----------------------

@@ -34,13 +34,14 @@ class Appointments(models.Model):
     Discription=models.TextField(max_length=500)
     Status=models.CharField(max_length=30,choices=SChoice,default='Pending',null=True)
 
-
-class Discharge(models.Model):
+class DischargePatients(models.Model):
+    Bill_Number=models.BigAutoField(primary_key=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     PatientId=models.ForeignKey(Patients,on_delete=models.CASCADE,null=True)
+    DoctorId=models.ForeignKey(Doctor,on_delete=models.CASCADE,null=True)
     releaseDate=models.DateField(auto_now_add=True,null=False)
-    RoomCharge=models.PositiveIntegerField(null=False)
-    MedicineCost=models.PositiveIntegerField(null=False)
-    DoctorFee=models.PositiveIntegerField(null=False)
+    RoomCharge=models.PositiveIntegerField(null=False,default=0)
+    MedicineCost=models.PositiveIntegerField(null=False,default=0)
+    DoctorFee=models.PositiveIntegerField(null=False,default=0)
     OtherCharge=models.PositiveIntegerField(null=False)
-    Total=models.PositiveIntegerField(null=False)
+    Total=models.PositiveIntegerField(null=False,default=0)

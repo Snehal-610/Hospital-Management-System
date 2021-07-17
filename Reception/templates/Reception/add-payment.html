@@ -242,11 +242,17 @@
                     <ul class="list">
                         <li>
                             <div class="user-info">
-                                <div class="image"><a href="..\doctor\profile.html"><img
-                                            src="..\assets\images\profile_av.jpg" alt="User"></a></div>
+                                <h4>Admin</h4>
+                                <div class="image"><a href=""><img src="{% static 'assets\images\joker.jpg' %}"
+                                            alt="User" ></a></div>
                                 <div class="detail">
-                                    <h4>Dr. Charlotte</h4>
-                                    <small>Neurologist</small>
+                                    {% if request.session.id %}
+                                    <h4>{{request.session.fname}}</h4>
+                                    <small>{{ data.Role}}</small>
+                                    {% else %}
+                                    <h4>Guest</h4>
+                                    <small>Client</small>
+                                    {% endif %}
                                 </div>
                             </div>
                         </li>
@@ -1013,7 +1019,7 @@
                 </div>
             </div>
         </div>
-        <form action="" method="POST">{% csrf_token %}
+        <form action="{% url 'alldoctors' %}" method="POST">{% csrf_token %}
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 ">
@@ -1025,7 +1031,7 @@
                             <div class="row clearfix">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" placeholder="Payment Number">
+                                        <input type="number" class="form-control" placeholder="Payment Number" name="billnumber">
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
