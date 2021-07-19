@@ -109,6 +109,10 @@
     .rtl table tr td:nth-child(2) {
       text-align: left;
     }
+    .associates {
+    margin-left: 17rem;
+}
+
   </style>
 </head>
 <body>
@@ -118,43 +122,45 @@
       <table cellpadding="0" cellspacing="10" border="1px">
           <tr class="information">
               <td colspan="2">
-                  Patient Name &nbsp&nbsp: {{name}}<br>
-                  Patient Mobile &nbsp: {{mobile}}<br>
-                  Patient Addres : {{address}}<br>
-                  Doctor Name &nbsp&nbsp: {{assignedDoctorName}}<br>
+                  Patient Name &nbsp&nbsp&nbsp: {{name}}<br>
+                  Patient Mobile &nbsp&nbsp: {{mobile}}<br>
+                  Patient Addres &nbsp: {{address}}<br>
+                  Doctor Name &nbsp&nbsp&nbsp: {{assignedDoctorName}}<br>
               </td>
           </tr>
           <tr class="top">
               <td colspan="2">
-                  Admit Date: {{admitDate}}<br>
-                  Release Date: {{todayDate}}<br>
-                  Days Spent: {{day}}<br>
-                  Disease and Symptoms: {{symptoms}}
+                  Admit Date &nbsp&nbsp&nbsp&nbsp&nbsp: {{admitDate}}<br>
+                  Release Date &nbsp: {{todayDate}}<br>
+                  Days Spent &nbsp&nbsp&nbsp&nbsp: {{day}}<br>
+                  Symptoms &nbsp&nbsp&nbsp&nbsp&nbsp: {{symptoms}}
               </td>
           </tr>
           <tr class="heading">
               <td>Item</td>
-              <td>Price</td>
+              <td class="associates">Price</td>
           </tr>
           <tr class="item">
               <td>Room Charge of {{day}} Days</td>
-              <td>{{roomCharge}}</td>
+              <td class="associates">{{roomCharge}}</td>
           </tr>
           <tr class="item">
               <td>Doctor Fee</td>
-              <td>{{doctorFee}}</td>
+              <td class="associates">{{doctorFee}}</td>
           </tr>
           <tr class="item">
               <td>Medicine Cost</td>
-              <td>{{medicineCost}}</td>
+              <td class="associates">{{medicineCost}}</td>
           </tr>
           <tr class="item last">
               <td>Other Charge</td>
-              <td>{{OtherCharge}}</td>
+              <td class="associates">{{OtherCharge}}</td>
           </tr>
           <tr class="total">
-              <td>Total Rupees</td>
-              <td>{{total}}</td>
+              <td><b> Total Rupees</b>
+              </b></td>
+              <td class="associates"><b> {{total}}</b>
+              </b></td>
           </tr>
 
       </table>
