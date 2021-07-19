@@ -6,6 +6,7 @@ from Patients.models import *
 from random import *
 from django.core.mail import send_mail
 from django.conf import settings
+from datetime import date
 
 # ----------------------- Basic Reception Section -----------------------
 def IndexPage(request):
@@ -310,7 +311,7 @@ def PatientApprove(request,pk,st):
 
 # ----------------------- Patient Section End -----------------------
 # ----------------------- Invoice | Payment | Receipt Section Start -----------------------
-def BillIndex(request):
+def AddPatientBill(request):
     if 'id' in request.session and 'emailid' in request.session:
         user=User.objects.get(id=request.session['id'])
     doctor=Doctor.objects.all()
@@ -319,36 +320,6 @@ def BillIndex(request):
     a=False
     d={"doctordata":doctor,"patientdata":patients,"data":user,"billnum":billnum,"a":a}
     return render(request,"Reception/add-payment.html",d)
-
-def BillData(request):
-    if 'id' in request.session and 'emailid' in request.session:
-        user=User.objects.get(id=request.session['id'])
-        if request.method=="POST":
-            patientinfo = request.POST['patientinfo']
-            docinfo = request.POST['docterinfo']
-            paydate = request.POST['Paymentdate']
-            rcharge = request.POST['roomcharge']
-            dcharge = request.POST['doccharge']
-            mcharge = request.POST['medicinecharge']
-            echarge = request.POST['extracharge']
-            Total = request.POST['total']
-            
-            doctorid=docinfo.split()
-            patientid=patientinfo.split()
-            did=Doctor.objects.get(id=doctorid[0])
-            pid=Patients.objects.get(id=patientid[0])
-            billnum=(DischargePatients.objects.order_by('-Bill_Number')[0].Bill_Number)+1
-            
-            Discharge=DischargePatients.objects.create(user=user,PatientId=pid,DoctorId=did,RoomCharge=rcharge,MedicineCost=mcharge,Bill_Number=billnum,PaymentDate=paydate,DoctorFee=dcharge,OtherCharge=echarge,Total=Total)
-
-        return redirect("allpayment")
-
-def AllPayment(request):
-    if 'id' in request.session and 'emailid' in request.session:
-        user=User.objects.get(id=request.session['id'])
-        bill=DischargePatients.objects.all()
-        d={"data":user,"bill":bill}
-    return render(request,"Reception/all-payment.html",d)
 
 def SelectedBillIndex(request,pk):
     if 'id' in request.session and 'emailid' in request.session:
@@ -359,4 +330,56 @@ def SelectedBillIndex(request,pk):
     a=True
     d={"doctordata":doctor,"patientdata":patients,"data":user,"billnum":billnum,"a":a}
     return render(request,"Reception/add-payment.html",d)
+
+def BillData(request):
+    if 'id' in request.session and 'emailid' in request.session:
+        user=User.objects.get(id=request.session['id'])
+        if request.method=="POST":
+            patientinfo = request.POST['patientinfo']
+            docinfo = request.POST['docterinfo']
+            paydate = request.POST['Paymentdate']
+            rcharge = int(request.POST['roomcharge'])
+            dcharge = int(request.POST['doccharge'])
+            mcharge = int(request.POST['medicinecharge'])
+            echarge = int(request.POST['extracharge'])
+            
+            doctorid=docinfo.split()
+            patientid=patientinfo.split()
+            did=Doctor.objects.get(id=doctorid[0])
+            pid=Patients.objects.get(id=patientid[0])
+            
+            days=(date.today()-pid.Created)
+            d =days.days
+            Total = (int(request.POST['roomcharge'])*int(d)) + int(request.POST['doccharge']) + int(request.POST['medicinecharge']) + int(request.POST['extracharge'])
+            billnum=(DischargePatients.objects.order_by('-Bill_Number')[0].Bill_Number)+1
+            
+            Discharge=DischargePatients.objects.create(user=user,PatientId=pid,DoctorId=did,RoomCharge=rcharge*d,MedicineCost=mcharge,Bill_Number=billnum,PaymentDate=paydate,DoctorFee=dcharge,OtherCharge=echarge,Total=Total)
+            
+            dic={
+                'name':pid.Fname + " " + pid.Lname,
+                'mobile':pid.Phone_Number,
+                'address':pid.Address,
+                'admitDate':pid.Created,
+                'assignedDoctorName':did.Fname,
+                'day':d,
+                'todayDate':date.today(),
+                'symptoms':pid.Symptoms,
+                'roomCharge':rcharge*d,
+                'doctorFee':dcharge,
+                'medicineCost':mcharge,
+                'OtherCharge':echarge,
+                'total':Total
+            }
+        return render(request,"Reception/Patient-Final-Bill.html",dic)
+
+def PatientFinalBill(request):
+
+    return render(request,"Reception/Patient-Final-Bill.html")
+
+def AllPayment(request):
+    if 'id' in request.session and 'emailid' in request.session:
+        user=User.objects.get(id=request.session['id'])
+        bill=DischargePatients.objects.all()
+        d={"data":user,"bill":bill}
+    return render(request,"Reception/all-payment.html",d)
 # ----------------------- Invoice | Payment | Receipt Section End -----------------------

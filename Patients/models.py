@@ -6,7 +6,7 @@ from Doctor.models import Doctor
 # Create your models here.
 class Patients(models.Model):
     GChoice=[('Gender','Gender'),('Male','Male'),('Female','Female')]
-    SChoice=[('Pending','Pending'),('Approve','Approve'),('Reject','Reject')]
+    SChoice=[('Pending','Pending'),('Approve','Approve'),('Reject','Reject'),('Discharge','Discharge')]
     
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     DoctorId=models.ForeignKey(Doctor,on_delete=models.CASCADE,null=True)
@@ -20,7 +20,7 @@ class Patients(models.Model):
     Gender=models.CharField(max_length=6,choices=GChoice,default='Gender')
     Email=models.EmailField(max_length=100,unique=True)
     Password=models.CharField(max_length=100)
-    Created = models.DateTimeField(auto_now_add=True)
+    Created = models.DateField(auto_now_add=True)
     status=models.CharField(max_length=30,choices=SChoice,default='Pending',null=True)
     def __str__(self):
         return self.Fname
