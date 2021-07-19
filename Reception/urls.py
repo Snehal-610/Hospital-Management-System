@@ -34,9 +34,9 @@ urlpatterns = [
     path("Patients-Update/<int:pk>/",views.PatientUpdate,name="patientsupdate"), 
     path('Patient-Approve/<int:pk><str:st>/',views.PatientApprove,name="patientapprove"),
 
-    path("Add-Patient-Bill/",views.AddPatientBill,name="patientbill"),
+    path("Add-Patient-Bill/",views.AddPatientBill,name="addpatientbill"),
     path("Selected-Patient-Bill/<int:pk>/",views.SelectedBillIndex,name="Selectedpatientbill"),
     path("Bill-Data/",views.BillData,name="billdata"),
-    path("Patient-Final-Bill/",views.PatientFinalBill,name="patientfinalbill"),
     path("All-Payment/",views.AllPayment,name="allpayment"),
+    path("Download-PDF/<int:pk>/",views.DownloadPDF,name="DownloadPdf"),
 ]

@@ -253,7 +253,8 @@ def AllPatients(request):
     if 'id' in request.session and 'emailid' in request.session:
         patient=Patients.objects.all()
         user=User.objects.get(id=request.session['id'])
-        d={"data":user,"patientdata":patient}
+        discharge=DischargePatients.objects.all()
+        d={"data":user,"patientdata":patient,'dischargedata':discharge}
         return render(request,"Reception/All-patients.html",d)
     else:
         return render(request,"Reception/All-patients.html")
@@ -354,8 +355,11 @@ def BillData(request):
             billnum=(DischargePatients.objects.order_by('-Bill_Number')[0].Bill_Number)+1
             
             Discharge=DischargePatients.objects.create(user=user,PatientId=pid,DoctorId=did,RoomCharge=rcharge*d,MedicineCost=mcharge,Bill_Number=billnum,PaymentDate=paydate,DoctorFee=dcharge,OtherCharge=echarge,Total=Total)
+            pid.status = "Discharge"
+            pid.save()
             
             dic={
+                'pid':pid.id,
                 'name':pid.Fname + " " + pid.Lname,
                 'mobile':pid.Phone_Number,
                 'address':pid.Address,
@@ -372,14 +376,51 @@ def BillData(request):
             }
         return render(request,"Reception/Patient-Final-Bill.html",dic)
 
-def PatientFinalBill(request):
-
-    return render(request,"Reception/Patient-Final-Bill.html")
-
 def AllPayment(request):
     if 'id' in request.session and 'emailid' in request.session:
         user=User.objects.get(id=request.session['id'])
         bill=DischargePatients.objects.all()
         d={"data":user,"bill":bill}
     return render(request,"Reception/all-payment.html",d)
+
 # ----------------------- Invoice | Payment | Receipt Section End -----------------------
+# ----------------------- Discharge Patient Bill (pdf) Download & Printing -----------------------
+
+import io
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from django.template import Context
+from django.http import HttpResponse
+
+
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    html  = template.render(context_dict)
+    result = io.BytesIO()
+    pdf = pisa.pisaDocument(io.BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return
+
+def DownloadPDF(request,pk):
+    dischargedetails=DischargePatients.objects.all().get(PatientId=pk)
+    pid=Patients.objects.get(id=pk)
+    days=(date.today()-pid.Created)
+    d =days.days
+    dic={
+                'pid':pid.id,
+                'name':pid.Fname + " " + pid.Lname,
+                'mobile':pid.Phone_Number,
+                'address':pid.Address,
+                'admitDate':pid.Created,
+                'assignedDoctorName':dischargedetails.DoctorId.Fname,
+                'day':d,
+                'todayDate':date.today(),
+                'symptoms':pid.Symptoms,
+                'roomCharge':dischargedetails.RoomCharge*d,
+                'doctorFee':dischargedetails.DoctorFee,
+                'medicineCost':dischargedetails.MedicineCost,
+                'OtherCharge':dischargedetails.OtherCharge,
+                'total':dischargedetails.Total
+            }
+    return render_to_pdf('Reception/Download_Bill.html',dic)
