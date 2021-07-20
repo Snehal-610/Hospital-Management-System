@@ -115,8 +115,10 @@
 
 <body>
     <br><br><br>
-    <div class="invoice-box">
-        <h1 align="center"><u>Invoice - Civil Hospital</u></h1>
+    {% if request.session.id and request.session.emailid %}
+    <h1 align="center"><u>Invoice - Civil Hospital</u></h1>
+    <div class="contianer">
+        <div class="invoice-box">
         <table cellpadding="0" cellspacing="10" border="10px">
             <tr class="information">
                 <td colspan="2">
@@ -158,13 +160,32 @@
                 <td>Total Rupees</td>
                 <td>{{total}}</td>
             </tr>
-
+            
         </table>
     </div>
     <br><br>
     <div class="download">
         <a style="background:red; width:500px;" href="{% url 'DownloadPdf' pk=pid %}">Download</a>
     </div>
+</div>
+{% endif %}
+{% include 'Reception/base.html' %}
+{% load static %}
+{% block content %}
+{% if request.session.Patientid and request.session.Patientemail %}
+<section class="content home">
+    <br><br><br>
+<div class="container">
+    <br><br><br>
+    <h5 style="text-align:center;">You Are Not Discharged By Hospital !</h5>
+    <h5 style="text-align:center;">Your Treatment Is Going On !</h5><br><br>
+    <h6 style="text-align:center;">When You Will Be Discahrged. You Can Download Invoice.</h6>
+
+    
+</div>
+</section>
+{% endif %}
+{% endblock %}
 </body>
 
 </html>

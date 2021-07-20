@@ -403,24 +403,28 @@ def render_to_pdf(template_src, context_dict):
     return
 
 def DownloadPDF(request,pk):
-    dischargedetails=DischargePatients.objects.all().get(PatientId=pk)
-    pid=Patients.objects.get(id=pk)
-    days=(date.today()-pid.Created)
-    d =days.days
-    dic={
-                'pid':pid.id,
-                'name':pid.Fname + " " + pid.Lname,
-                'mobile':pid.Phone_Number,
-                'address':pid.Address,
-                'admitDate':pid.Created,
-                'assignedDoctorName':dischargedetails.DoctorId.Fname,
-                'day':d,
-                'todayDate':date.today(),
-                'symptoms':pid.Symptoms,
-                'roomCharge':dischargedetails.RoomCharge*d,
-                'doctorFee':dischargedetails.DoctorFee,
-                'medicineCost':dischargedetails.MedicineCost,
-                'OtherCharge':dischargedetails.OtherCharge,
-                'total':dischargedetails.Total
-            }
-    return render_to_pdf('Reception/Download_Bill.html',dic)
+    try:
+        dischargedetails=DischargePatients.objects.get(PatientId=pk)
+        pid=Patients.objects.get(id=pk)
+        days=(date.today()-pid.Created)
+        d =days.days
+        dic={
+                    'pid':pid.id,
+                    'name':pid.Fname + " " + pid.Lname,
+                    'mobile':pid.Phone_Number,
+                    'address':pid.Address,
+                    'admitDate':pid.Created,
+                    'assignedDoctorName':dischargedetails.DoctorId.Fname,
+                    'day':d,
+                    'todayDate':date.today(),
+                    'symptoms':pid.Symptoms,
+                    'roomCharge':dischargedetails.RoomCharge*d,
+                    'doctorFee':dischargedetails.DoctorFee,
+                    'medicineCost':dischargedetails.MedicineCost,
+                    'OtherCharge':dischargedetails.OtherCharge,
+                    'total':dischargedetails.Total
+                }
+        return render_to_pdf('Reception/Download_Bill.html',dic)
+    except:
+        if 'Patientid' in request.session and 'Patientemail' in request.session:
+            return render(request,'Reception/Patient-Final-Bill.html')

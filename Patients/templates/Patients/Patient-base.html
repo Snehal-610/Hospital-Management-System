@@ -278,9 +278,8 @@
                             <a href="javascript:void(0);" class="menu-toggle"><i
                                     class="zmdi zmdi-balance-wallet"></i><span>Payments</span></a>
                             <ul class="ml-menu">
-                                <li class=""><a href="..\payment\all-payment.html">All Payments</a></li>
                                 <li class=""><a href="..\payment\add-payment.html">Pay Via UPI/Bank</a></li>
-                                <li class=""><a href="..\patients\invoice.html">Invoice</a></li>
+                                <li class=""><a href="{% url 'DownloadPdf' pk=patientdata.id %}">Invoice</a></li>
                             </ul>
                         </li>
                         {% endif %}
