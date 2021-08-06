@@ -286,7 +286,7 @@
                             <ul class="ml-menu">
                                 <li class=""><a href="{% url 'alldoctors' %}">All Doctors</a></li>
                                 <li class=""><a href="{% url 'DocSignUp' %}">Add Doctor</a></li>
-                                <li class=""><a href="{% url 'docapprove' %}">Approved Doctor</a></li>
+                                <li class=""><a href="{% url 'doctorstatus' %}">Approved Doctor</a></li>
                             </ul>
                         </li>
                         <li class="">
@@ -295,9 +295,7 @@
                             <ul class="ml-menu">
                                 <li class=""><a href="{% url 'allpatients' %}">All Patients</a></li>
                                 <li class=""><a href="{% url 'PatientSignUp' %}">Admit Patient</a></li>
-                                <li class=""><a href="{% url 'PatientSignUp' %}">Approve Patient</a></li>
-                                <!-- <li class=""><a href="{% url 'PatientSignUp' %}">Discharge Patient</a></li> -->
-                            </ul>
+                             </ul>
                         </li>
                         <li class="">
                             <a href="javascript:void(0);" class="menu-toggle"><i
@@ -305,36 +303,6 @@
                             <ul class="ml-menu">
                                 <li class=""><a href="..\payment\all-payment.html">All Payments</a></li>
                                 <li class=""><a href="..\payment\add-payment.html">Add Payment</a></li>
-                                <li class=""><a href="..\patients\invoice.html">Invoice</a></li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="javascript:void(0);" class="menu-toggle"><i c
-                                    lass="zmdi zmdi-label-alt"></i><span>Departments</span></a>
-                            <ul class="ml-menu">
-                                <li class=""><a href="..\departments\add-department.html">Add</a></li>
-                                <li class=""><a href="..\departments\all-departments.html">All Departments</a></li>
-                                <li><a href="javascript:void(0);">Cardiology</a></li>
-                                <li><a href="javascript:void(0);">Pulmonology</a></li>
-                                <li><a href="javascript:void(0);">Gynecology</a></li>
-                                <li><a href="javascript:void(0);">Neurology</a></li>
-                                <li><a href="javascript:void(0);">Urology</a></li>
-                                <li><a href="javascript:void(0);">Gastrology</a></li>
-                                <li><a href="javascript:void(0);">Pediatrician</a></li>
-                                <li><a href="javascript:void(0);">Laboratory</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i
-                                    class="zmdi zmdi-lock"></i><span>Authentication</span></a>
-                            <ul class="ml-menu">
-                                <li><a href="{% url 'loginpage' %}">Sign In</a></li>
-                                <li><a href="{% url 'registerpage' %}">Sign Up</a></li>
-                                <li><a href="{% url 'forgetpswd' %}">Forgot Password</a></li>
-                                <li><a href="..\authentication\page404.html">Page 404</a></li>
-                                <li><a href="..\authentication\page500.html">Page 500</a></li>
-                                <li><a href="..\authentication\page-offline.html">Page Offline</a></li>
-                                <li><a href="..\authentication\lockscreen.html">Locked Screen</a></li>
                             </ul>
                         </li>
                     </ul>

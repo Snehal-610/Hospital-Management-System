@@ -32,7 +32,7 @@ def PatientRegisterUser(request):
         symptoms=request.POST['symptoms']
         email=request.POST['email']
         pswd=request.POST['pswd']
-        docinformation=request.POST['docter']
+        docinformation=request.POST['doctor']
         
         doctorid=docinformation.split()
         did=Doctor.objects.get(id=doctorid[0])
@@ -46,6 +46,7 @@ def PatientRegisterUser(request):
             if 'id' in request.session and 'emailid' in request.session:
                 user=User.objects.create(FName=fname,LName=lname,Address=adress,Password=pswd,Email=email,Role="Patient") 
                 patient=Patients.objects.create(user=user,DoctorId=did,Fname=fname,Lname=lname,Address=adress,Gender=gender,Symptoms=symptoms,Phone_Number=phone,Email=email,Password=pswd,Age=age,status="Approve")
+                return redirect("indexpage")
             else:
                 user=User.objects.create(FName=fname,LName=lname,Address=adress,Password=pswd,Email=email,Role="Patient") 
                 patient=Patients.objects.create(user=user,DoctorId=did,Fname=fname,Lname=lname,Address=adress,Gender=gender,Symptoms=symptoms,Phone_Number=phone,Email=email,Password=pswd,Age=age)

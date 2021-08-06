@@ -353,7 +353,7 @@ def BillData(request):
             d =days.days
             Total = (int(request.POST['roomcharge'])*int(d)) + int(request.POST['doccharge']) + int(request.POST['medicinecharge']) + int(request.POST['extracharge'])
             billnum=(DischargePatients.objects.order_by('-Bill_Number')[0].Bill_Number)+1
-            
+           
             Discharge=DischargePatients.objects.create(user=user,PatientId=pid,DoctorId=did,RoomCharge=rcharge*d,MedicineCost=mcharge,Bill_Number=billnum,PaymentDate=paydate,DoctorFee=dcharge,OtherCharge=echarge,Total=Total)
             pid.status = "Discharge"
             pid.save()

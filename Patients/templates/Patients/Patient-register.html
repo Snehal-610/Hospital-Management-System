@@ -82,7 +82,7 @@
                                 <img src="{% static 'assets\images\logo.svg' %}" alt="">
                             </div>
                             {% if request.session.id %}
-                            <h5>Register a new Patient</h5>
+                            <h5>Admit a new Patient</h5>
                             {% else %}
                             <span>Admit to Hospital</span>
                             {% endif %}
@@ -138,9 +138,11 @@
                                     <option selected class="col">0 Name and Department
                                     </option>
                                     {% for i in doctordata %}
+                                    {% if i.DStatus == "Approve" %}
                                     <option class="col">
                                     {{i.id}} {{i.Fname}} {{i.Department}}
                                     </option>
+                                    {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>
@@ -170,12 +172,16 @@
                             </label>
                         </div>
                         <div class="footer text-center">
-
+                            {% if request.session.id %}
+                            <input type="submit" value="Admit"
+                                class="btn btn-primary btn-round btn-lg btn-block waves-effect waves-light">
+                            {% else %}
                             <input type="submit" value="SIGN UP"
                                 class="btn btn-primary btn-round btn-lg btn-block waves-effect waves-light">
 
                             <h5><a class="link" href="{% url 'Patientlogin' %}">You already Admitted?</a>
                             </h5>
+                            {% endif %}
                         </div>
                     </form>
                 </div>
