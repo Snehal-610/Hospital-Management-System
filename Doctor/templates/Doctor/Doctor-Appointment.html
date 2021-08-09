@@ -47,6 +47,14 @@
                         </ul>
                     </div>
                     <div class="body">
+                        <ul class="nav nav-tabs padding-0">
+                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#All">All Appointment</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Pending">Pending Appointment</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Reject">Rejected Appointment</a>
+                            </li>
+                        </ul>
                         <!-- Tab panes -->
                         <div class="tab-content m-t-10">
                             <div class="tab-pane table-responsive active" id="All">
@@ -79,6 +87,69 @@
                                                 <span class="badge badge-danger">{{i.Status}}</span>
                                             {% endif %}</td>
                                         </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane table-responsive" id="Pending">
+                                <table class="table m-b-0 table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Doctor Name</th>
+                                            <th>Patient ID</th>
+                                            <th>Patient Name & Age</th>
+                                            <th>Patient Symptoms</th>
+                                            <th>Discription</th>
+                                            <th>Last Visit</th>
+                                            <th>Approve</th>
+                                            <th>Reject</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in appointmentdata %}
+                                        {% if i.Status == 'Pending' %}
+                                        <tr>
+                                            <td>{{i.DoctorId.Fname}}</td>
+                                            <td><span class="list-name">{{i.PatientId.id}}</span></td>
+                                            <td>{{i.PatientId.Fname}} - {{i.PatientId.Age}} Years old</td>
+                                            <td>{{i.PatientId.Symptoms}}</td>
+                                            <td>{{i.Discription}}</td>
+                                            <td>{{i.AppointmentDate}}</td>
+                                            <td><a href="{% url 'ActionAppointment' pk=i.id st='Approve'  %}" class="btn btn-warning btn-round">Approve</a></td>
+                                            <td><a href="{% url 'ActionAppointment' pk=i.id st='Reject'  %}" class="btn btn-danger btn-round" onclick="return confirm('Are you really want to Reejct?')">Reject</a></td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane table-responsive" id="Reject">
+                                <table class="table m-b-0 table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Doctor Name</th>
+                                            <th>Patient ID</th>
+                                            <th>Patient Name & Age</th>
+                                            <th>Patient Symptoms</th>
+                                            <th>Discription</th>
+                                            <th>Last Visit</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in appointmentdata %}
+                                        {% if i.Status == 'Reject' %}
+                                        <tr>
+                                            <td>{{i.DoctorId.Fname}}</td>
+                                            <td><span class="list-name">{{i.PatientId.id}}</span></td>
+                                            <td>{{i.PatientId.Fname}} - {{i.PatientId.Age}} Years old</td>
+                                            <td>{{i.PatientId.Symptoms}}</td>
+                                            <td>{{i.Discription}}</td>
+                                            <td>{{i.AppointmentDate}}</td>
+                                            <td><span class="badge badge-danger">{{i.Status}}</span></td>
+                                            
+                                        </tr>
+                                        {% endif %}
                                         {% endfor %}
                                     </tbody>
                                 </table>

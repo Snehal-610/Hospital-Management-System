@@ -121,6 +121,15 @@ def DoctorAppointment(request):
 
             return render(request,"Doctor/Doctor-Appointment.html",{"appointmentdata":appointdetails})
 
+def ActionAppointment(request,pk,st):
+    if 'doctorid' in request.session and 'doctoremail' in request.session:
+        appointment=Appointments.objects.get(id=pk)
+        user=User.objects.get(id=request.session['doctorid'])
+        appointment.Status = st
+        appointment.save()
+        return redirect("doctorappointment")
+    return redirect("Doclogin")
+
 def DoctorPatients(request):
     if 'doctorid' in request.session and 'doctoremail' in request.session:
         did=Doctor.objects.get(id=request.session['doctorid'])

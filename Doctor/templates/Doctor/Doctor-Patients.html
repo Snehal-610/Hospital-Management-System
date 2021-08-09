@@ -70,12 +70,17 @@
                                             <td>{{i.PatientId.Phone_Number}}</td>
                                             <td>{{i.PatientId.Symptoms}}</td>
                                             <td>{{i.Discription}}</td>
-                                            {% if i.PatientId.status == 'Approve' %}
-                                            <td><a href="#" class="btn btn-warning btn-round"
-                                                 onclick="return confirm('Are you really want to Dischage the patient?')">Discharge</a></td>
-                                                 {% else %}
-                                                 <td>Not Applicable</td>
+                                            <td>
+                                                {% if i.PatientId.status == 'Approve' %}
+                                                <span class="badge badge-success">{{i.PatientId.status}}</span>
+                                                {% elif i.PatientId.status == 'Pending' %}
+                                                <span class="badge badge-warning">{{i.PatientId.status}}</span>
+                                                {% elif i.PatientId.status == 'Reject' %}
+                                                <span class="badge badge-danger">{{i.PatientId.status}}</span>
+                                                {% elif i.PatientId.status == 'Discharge' %}
+                                                <span class="badge badge-light">{{i.PatientId.status}}</span>
                                                 {% endif %}
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

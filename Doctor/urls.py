@@ -12,5 +12,6 @@ urlpatterns = [
     path('Doctor-Profile',views.DoctorProfile,name="Docprofile"),
     path('Doctor-Upadate',views.DoctorUpdate,name="Docupdate"),
     path('Doctor-Appointments',views.DoctorAppointment,name="doctorappointment"),
+    path('Action-Appointment/<int:pk><str:st>/',views.ActionAppointment,name="ActionAppointment"),
     path('Doctor-Patients',views.DoctorPatients,name="doctorpatients"),
 ]

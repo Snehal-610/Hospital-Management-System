@@ -113,8 +113,8 @@ def PatientUpdate(request):
 def BookAppointment(request):
     if 'Patientid' in request.session and 'Patientemail' in request.session: 
         patient=Patients.objects.get(id=request.session['Patientid'])
-        doctor=Doctor.objects.all().values()
-        p={"patientdata":patient,"docdata":doctor}
+        doctor=Doctor.objects.all()
+        p={"patientdata":patient,"doctordata":doctor}
         return render(request,"Reception/book-appointment.html",p)
     else:
         return render(request,"Patients/Patient-login.html")
@@ -129,7 +129,8 @@ def RequestAppointment(request):
             doctorid=docinformation.split()
             did=Doctor.objects.get(id=doctorid[0])
             appointment=Appointments.objects.create(PatientId=pid,DoctorId=did,AppointmentDate=appointmentdate,Discription=discription)
-            p={'patientdata':pid,'doctordata':did,"appointmentdata":appointment}
+            appointmentss=Appointments.objects.filter(PatientId=request.session['Patientid'])
+            p={'patientdata':pid,'doctordata':did,"appointmentdata":appointmentss}
             return render(request,"Patients/Patient-Appointment.html",p)
     else:
         return redirect("Patientlogin")

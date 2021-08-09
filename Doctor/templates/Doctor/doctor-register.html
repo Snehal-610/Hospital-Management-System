@@ -20,16 +20,7 @@
     <link rel="stylesheet" href="{% static '\assets\css\authentication.css' %}">
     <link rel="stylesheet" href="{% static '\assets\css\color_skins.css' %}">
 
-    <style>
-        option {
-            color: white;
-            background-color: #91989e;
-        }
-
-        .bg {
-            background-image: url("../assets/images/login.jpg");
-        }
-    </style>
+    
 </head>
 
 
@@ -78,14 +69,16 @@
             </div>
         </div>
     </nav>
-
     <div class="page-header">
-        <div class="page-header-image" class="bg"></div>
+        <div class="page-header-image">
+        <img src="{% static 'assets\images\login.jpg' %}" alt="">
+        </div>
         <div class="container">
             <div class="col-lg-3 content-center">
                 <div class="card-plain">
                     <form class="form" method="POST" action="{% url 'Docreguser' %}" enctype="multipart/form-data">{% csrf_token %}
                         <div class="header">
+                            <br><br><br><br>
                             {% if request.session.id %}
                             <h5>Register a new Doctor to Hospital</h5>
                             {% else %}
@@ -96,6 +89,7 @@
                             <h5>{{msg}}</h5>
                             {% endif %}
                         </div>
+                        
                         <div class="content">
                             <div class="row clearfix">
                                 <div class="col-sm-6">
@@ -187,9 +181,11 @@
                                     <h5><a class="link" href="{% url 'Doclogin' %}">You already Register ?</a>
                                     </h5>
                                 </div>
+                                
                     </form>
                 </div>
             </div>
+            <br><br>
         </div>
         <footer class="footer">
             <div class="container">
